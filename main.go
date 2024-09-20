@@ -162,6 +162,9 @@ func podcastHandler(w http.ResponseWriter, r *http.Request) {
 			PubDate:     &pubdate,
 			IDuration:   strconv.Itoa(int(d.Meta.AudioSource.DurationMs / 1000)),
 		}
+		if d.Meta.Image != "" {
+			item.AddImage(d.Meta.Image)
+		}
 
 		// fetch file size
 		if size, err := getSize(d.Meta.AudioSource.MP3); err == nil {
