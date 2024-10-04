@@ -139,7 +139,7 @@ func podcastHandler(w http.ResponseWriter, r *http.Request) {
 	}
 
 	c := client.NewClient(os.Getenv("REPUBLIK_FEEDER_COOKIE"))
-	docs, err := c.Fetch(client.Filter{Feed: true, HasAudio: true, AudioSourceKind: "readAloud"}, articleLimit)
+	docs, err := c.Fetch(client.Filter{Feed: true, Template: "article"}, articleLimit)
 
 	if err != nil {
 		http.Error(w, err.Error(), http.StatusInternalServerError)

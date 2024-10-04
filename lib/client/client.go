@@ -60,10 +60,9 @@ type Response struct {
 }
 
 type Filter struct {
-	Feed            bool
-	HasAudio        bool
-	AudioSourceKind string
-	Format          string
+	Feed     bool
+	Format   string
+	Template string
 }
 
 func (f Filter) String() string {
@@ -73,12 +72,8 @@ func (f Filter) String() string {
 		c = append(c, "feed: true")
 	}
 
-	if f.HasAudio {
-		c = append(c, "hasAudio: true")
-	}
-
-	if f.AudioSourceKind != "" {
-		c = append(c, "audioSourceKind: "+f.AudioSourceKind)
+	if f.Template != "" {
+		c = append(c, "template: \""+f.Template+"\"")
 	}
 
 	if f.Format != "" {
