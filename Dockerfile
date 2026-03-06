@@ -1,21 +1,13 @@
-# Build image
-FROM alpine:latest AS build
+FROM alpine:latest
+ARG TARGETPLATFORM
+LABEL org.opencontainers.image.source=https://github.com/maetthu/republik-feeder
+LABEL org.opencontainers.image.description="republik-feeder"
+LABEL org.opencontainers.image.licenses=MIT
 
-# Build requirements
 RUN apk add --no-cache ca-certificates
 
-# Copy binary
-COPY republik-feeder /republik-feeder
-
-# ---
-
-# Runtime image
-FROM scratch
-LABEL maintainer="Matthias Blaser <git@mooch.ch>"
-
-COPY --from=build /etc/ssl/certs/ca-certificates.crt /etc/ssl/certs/ca-certificates.crt
-COPY --from=build /republik-feeder /republik-feeder
+COPY $TARGETPLATFORM/republik-feeder /usr/bin/republik-feeder
 
 EXPOSE 8080/tcp
-ENTRYPOINT ["/republik-feeder", ":8080"]
+ENTRYPOINT ["/usr/bin/republik-feeder", ":8080"]
 CMD []
